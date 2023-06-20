@@ -1,12 +1,24 @@
-#include <Arduino.h>
-#include <BitBang_I2C.h>
-#include "LTR390.h"
-
+//
+// bb_ltr390 - Lite-On Visible/UV light sensor library
 //
 // Written by Larry Bank - 6/6/2022
-// Copyright (c) 2022 BitBank Software, Inc.
-// bitbank@pobox.com
+// Copyright (c) 2022-2023 BitBank Software, Inc.
+// email: bitbank@pobox.com
 //
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//    http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#include <Arduino.h>
+#include <BitBang_I2C.h>
+#include "bb_ltr390.h"
 
 BBI2C * LTR390::getBB()
 {
@@ -24,7 +36,6 @@ uint8_t ucTemp[8];
 
     for (int i=0; i<6; i++) { // need to read them one by one
        I2CReadRegister(&_bbi2c, _iAddr, LTR390_ALS_DATA_0+i, &ucTemp[i], 1); // read ALS and UVS data together
-Serial.println(ucTemp[i], HEX);
     }
     ucTemp[2] &= 0xf; // trim to 4-bits
     ucTemp[5] &= 0xf;
@@ -153,7 +164,6 @@ uint8_t map[16];
 int i, iDev;
 uint32_t u32Capabilities;
 
-//Serial.println("Entering init");
     if (_bbi2c.iSDA == 0 && _bbi2c.iSCL == 0) { // need to init
 	_bbi2c.bWire = !bBitBang; // use bit bang?
 	_bbi2c.iSDA = iSDA;
@@ -167,11 +177,9 @@ uint32_t u32Capabilities;
 	{
 		if (map[i>>3] & (1 << (i & 7))) // device found
 		{
-//Serial.print("Found device at 0x"); Serial.println(i, HEX);
         		iDev = I2CDiscoverDevice(&_bbi2c, i, &u32Capabilities);
 			if (iDev == DEVICE_LTR390) // found one
 			{
-                             //   Serial.println("found an LTR390!");
 				_iAddr = i;
 				break;
 			}
