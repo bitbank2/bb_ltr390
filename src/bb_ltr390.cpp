@@ -20,16 +20,6 @@
 #include <BitBang_I2C.h>
 #include "bb_ltr390.h"
 
-BBI2C * LTR390::getBB()
-{
-    return &_bbi2c;
-} /* getBB() */
-
-void LTR390::setBB(BBI2C *pBB)
-{
-   memcpy(&_bbi2c, pBB, sizeof(BBI2C));
-} /* setBB() */
-
 void LTR390::getSample()
 {
 uint8_t ucTemp[8];

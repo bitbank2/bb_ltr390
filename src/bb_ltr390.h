@@ -41,8 +41,6 @@ class LTR390
     int start(boolean bUV);
     int stop();
     int reset();
-    BBI2C *getBB();
-    void setBB(BBI2C *pBB);
     uint8_t status();
     void getSample(); // trigger + read the latest data
     int setResolution(int iRes);
