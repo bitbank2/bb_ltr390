@@ -152,7 +152,7 @@ int LTR390::init(int iSDA, int iSCL, bool bBitBang, int32_t iSpeed)
 {
 uint8_t map[16];
 int i, iDev;
-uint32_t u32Capabilities;
+unsigned int u32Capabilities;
 
     if (_bbi2c.iSDA == 0 && _bbi2c.iSCL == 0) { // need to init
 	_bbi2c.bWire = !bBitBang; // use bit bang?
